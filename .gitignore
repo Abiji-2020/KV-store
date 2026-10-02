@@ -1,0 +1,37 @@
+# Build artifacts
+bin/
+obj/
+
+# CMake build directories
+build/
+cmake-build-*/
+
+# Compiled object files
+*.o
+*.a
+*.so
+*.so.*
+
+# WAL and test data files
+*.wal
+/tmp/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Test output
+*.log
+*.out
