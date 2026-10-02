@@ -87,7 +87,10 @@ def run_self_test() -> bool:
     print("[PASS] IEEE 802.3 CRC32 reference algorithm verified (0xCBF43926)")
 
     # 2. Verify WAL Encoder / Decoder
-    temp_wal = tempfile.mktemp(suffix=".wal")
+    # Use NamedTemporaryFile instead of mktemp() to securely create the file and
+    # avoid TOCTOU race conditions (CodeQL: py/insecure-temporary-file).
+    with tempfile.NamedTemporaryFile(suffix=".wal", delete=False) as _tmp:
+        temp_wal = _tmp.name
     try:
         raw_rec1 = WalDecoder.encode_record(OP_SET, "mykey", "myval", timestamp_ns=1000)
         raw_rec2 = WalDecoder.encode_record(OP_DEL, "mykey", "", timestamp_ns=2000)
